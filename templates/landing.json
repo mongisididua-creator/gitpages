@@ -1,0 +1,17 @@
+{
+  "name": "Landing Modern",
+  "files": [
+    {
+      "path": "index.html",
+      "content": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n  <title>{{TITLE}}</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n  <nav><strong>{{TITLE}}</strong><a href=\"#tentang\">Tentang</a></nav>\n  <main class=\"hero\">\n    <span>GITHUB PAGES</span>\n    <h1>{{TITLE}}</h1>\n    <p>Website ini dibuat melalui GitPage Manager.</p>\n    <a class=\"btn\" href=\"#tentang\">Mulai</a>\n  </main>\n  <section id=\"tentang\"><article><b>Ringan</b><p>HTML, CSS, dan JavaScript statis.</p></article><article><b>Mudah</b><p>Dikelola langsung dari repository GitHub.</p></article><article><b>Online</b><p>Dipublikasikan melalui GitHub Pages.</p></article></section>\n  <script src=\"script.js\"></script>\n</body>\n</html>"
+    },
+    {
+      "path": "style.css",
+      "content": "*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;background:#f7f9fc;color:#172033}nav{max-width:1100px;margin:auto;padding:24px;display:flex;justify-content:space-between}nav a{color:#172033;text-decoration:none}.hero{max-width:900px;margin:80px auto;text-align:center;padding:0 24px}.hero span{font-size:12px;font-weight:800;color:#2563eb}.hero h1{font-size:clamp(42px,8vw,82px);margin:16px 0}.hero p{color:#6b7280;font-size:18px}.btn{display:inline-block;margin-top:20px;padding:12px 18px;background:#172033;color:#fff;border-radius:10px;text-decoration:none}section{max-width:1100px;margin:50px auto;padding:0 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}article{background:#fff;border:1px solid #e5e9f0;border-radius:18px;padding:24px}article p{color:#6b7280}@media(max-width:720px){section{grid-template-columns:1fr}}"
+    },
+    {
+      "path": "script.js",
+      "content": "console.log('{{TITLE}} aktif.');"
+    }
+  ]
+}

@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>GitPage Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-logo gp">GP</div>
+      <span class="auth-badge">ADMIN LOGIN</span>
+      <h1>GitPage Manager</h1>
+      <p>Kelola repository dan GitHub Pages dari satu panel.</p>
+
+      <form id="adminLoginForm">
+        <label>Password Admin</label>
+        <div class="password-wrap">
+          <input
+            id="adminPasswordInput"
+            type="password"
+            required
+            autocomplete="current-password"
+            placeholder="Masukkan password admin"
+          >
+          <button
+            id="togglePassword"
+            type="button"
+            title="Tampilkan password"
+            aria-label="Tampilkan password"
+          >👁</button>
+        </div>
+
+        <button class="btn btn-primary btn-block" id="adminLoginBtn" type="submit">
+          Masuk sebagai Admin
+        </button>
+      </form>
+
+      <div class="auth-note" id="authNote"></div>
+    </div>
+  </section>
+
+  <div id="app" class="app-shell app-locked">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark brand-accent">GP</div>
+        <div>
+          <strong>GitPage</strong>
+          <span>Manager</span>
+        </div>
+      </div>
+
+      <div class="nav-caption">UTAMA</div>
+      <nav>
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span>Dashboard</button>
+        <button class="nav-item" data-view="repositories"><span>◫</span>Repository</button>
+        <button class="nav-item" data-open-create><span>＋</span>Buat Website</button>
+        <button class="nav-item" data-view="files"><span>☷</span>File Manager</button>
+      </nav>
+
+      <div class="nav-caption secondary">SISTEM</div>
+      <nav>
+        <button class="nav-item" data-view="settings"><span>⚙</span>Pengaturan</button>
+      </nav>
+
+      <div class="sidebar-status">
+        <span class="status-dot"></span>
+        <div>
+          <strong>GitHub API</strong>
+          <small>via Apps Script</small>
+        </div>
+      </div>
+    </aside>
+
+    <section class="content-shell">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu" id="mobileMenu" aria-label="Buka menu">☰</button>
+          <div>
+            <h1 id="pageTitle">Dashboard</h1>
+            <p id="pageSubtitle">Kelola repository dan GitHub Pages.</p>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="icon-btn" id="refreshBtn" title="Muat ulang">↻</button>
+          <button class="icon-btn" id="logoutBtn" title="Keluar">⇥</button>
+
+          <div class="profile">
+            <div class="avatar brand-accent" id="avatar">GH</div>
+            <div>
+              <strong id="profileName">GitHub</strong>
+              <span id="profileLogin">@github</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="main">
+        <section class="view active" id="view-dashboard">
+          <div class="hero">
+            <div>
+              <span class="hero-badge">GITHUB PAGES MANAGER</span>
+              <h2>Kelola website GitHub Pages dengan tampilan yang lebih sederhana.</h2>
+              <p>Buat repository, kelola file, aktifkan Pages, dan atur custom domain dari satu dashboard.</p>
+            </div>
+
+            <button class="btn btn-light btn-lg" data-open-create>+ Buat Website</button>
+          </div>
+
+          <div class="stats">
+            <article>
+              <span>Repository</span>
+              <strong id="statRepos">—</strong>
+              <small>Total repository milik Anda</small>
+            </article>
+            <article>
+              <span>Pages Aktif</span>
+              <strong id="statPages">—</strong>
+              <small>Website GitHub Pages</small>
+            </article>
+            <article>
+              <span>Public</span>
+              <strong id="statPublic">—</strong>
+              <small>Repository publik</small>
+            </article>
+            <article>
+              <span>Private</span>
+              <strong id="statPrivate">—</strong>
+              <small>Repository privat</small>
+            </article>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <span class="mini-label">REPOSITORY</span>
+                <h3>Repository Terbaru</h3>
+                <p>Repository yang paling baru diperbarui.</p>
+              </div>
+              <button class="text-btn" data-view-link="repositories">Lihat semua →</button>
+            </div>
+
+            <div id="recentRepos" class="repo-list">
+              <div class="loading-row">Memuat...</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-repositories">
+          <div class="section-top">
+            <div>
+              <span class="mini-label">GITHUB REPOSITORY</span>
+              <h2>Repository</h2>
+              <p>Kelola repository dan status GitHub Pages.</p>
+            </div>
+            <button class="btn btn-primary" data-open-create>+ Repository / Website</button>
+          </div>
+
+          <div class="toolbar">
+            <div class="search">
+              <span>⌕</span>
+              <input id="repoSearch" type="search" placeholder="Cari repository...">
+            </div>
+          </div>
+
+          <div class="panel no-pad">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Repository</th>
+                    <th>Visibilitas</th>
+                    <th>Pages</th>
+                    <th>Diperbarui</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="repoTableBody">
+                  <tr><td colspan="5" class="center">Memuat...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-files">
+          <div class="section-top">
+            <div>
+              <span class="mini-label">FILE MANAGER</span>
+              <h2>Kelola File Repository</h2>
+              <p>Buka, buat, edit, upload, dan hapus file langsung dari GitPage Manager.</p>
+            </div>
+          </div>
+
+          <div class="file-toolbar">
+            <div class="field compact">
+              <label>Repository</label>
+              <select id="fileRepoSelect">
+                <option value="">Pilih repository...</option>
+              </select>
+            </div>
+
+            <div class="file-actions">
+              <button class="btn" id="newFileBtn">+ File Baru</button>
+              <label class="btn">
+                ↑ Upload File
+                <input id="uploadInput" type="file" hidden>
+              </label>
+            </div>
+          </div>
+
+          <div class="panel no-pad file-panel">
+            <div class="breadcrumb" id="breadcrumb">
+              <button data-path="">root</button>
+            </div>
+
+            <div id="fileList" class="file-list">
+              <div class="empty">
+                <b>Pilih repository</b>
+                <span>Isi repository akan tampil di sini.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-settings">
+          <div class="section-top">
+            <div>
+              <span class="mini-label">SYSTEM</span>
+              <h2>Pengaturan</h2>
+              <p>Status backend dan konfigurasi GitPage Manager.</p>
+            </div>
+          </div>
+
+          <div class="settings-grid">
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Koneksi Backend</h3>
+                  <p>Status GitHub API melalui Google Apps Script.</p>
+                </div>
+                <span id="connectionPill" class="status neutral">Memeriksa...</span>
+              </div>
+
+              <div class="setting-row"><span>GitHub Token</span><strong id="tokenStatus">—</strong></div>
+              <div class="setting-row"><span>Password Admin</span><strong id="passwordStatus">—</strong></div>
+              <div class="setting-row"><span>Backend</span><strong id="backendStatus">—</strong></div>
+
+              <button class="btn" id="testConnectionBtn">Tes Koneksi</button>
+            </div>
+
+            <div class="panel">
+              <h3>Struktur Frontend</h3>
+              <p class="muted">Seluruh tampilan ada di GitHub. Apps Script tetap hanya menggunakan satu file backend <code>Code.gs</code>.</p>
+
+              <div class="code-list">
+                <code>index.html</code>
+                <code>style.css</code>
+                <code>config.js</code>
+                <code>app.js</code>
+                <code>templates/*.json</code>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="createModal">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <span class="modal-badge">WEBSITE BARU</span>
+          <h2>Buat Repository & Pages</h2>
+        </div>
+        <button class="modal-close" data-close-modal="createModal">×</button>
+      </div>
+
+      <form id="createForm">
+        <div class="grid2">
+          <div class="field">
+            <label>Nama repository *</label>
+            <input name="name" required placeholder="web-sekolah">
+          </div>
+          <div class="field">
+            <label>Judul website</label>
+            <input name="siteTitle" placeholder="Website Saya">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Deskripsi</label>
+          <input name="description" placeholder="Deskripsi singkat">
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label>Template</label>
+            <select name="template" id="createTemplateSelect">
+              <option value="landing">Landing Modern</option>
+              <option value="dashboard">Dashboard</option>
+              <option value="blank">Minimal</option>
+              <option value="none">Tanpa Template — Upload Kode Sendiri</option>
+            </select>
+            <small id="templateHint">Template akan langsung membuat file website awal.</small>
+          </div>
+
+          <div class="field">
+            <label>Visibilitas</label>
+            <select name="visibility">
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
+          </div>
+        </div>
+
+        <label class="check">
+          <input name="enablePages" id="createPagesCheck" type="checkbox" checked>
+          <span>
+            <b>Aktifkan GitHub Pages</b>
+            <small id="pagesHint">Publish dari branch utama, folder root.</small>
+          </span>
+        </label>
+
+        <div class="notice info" id="noTemplateNotice" hidden>
+          Repository akan dibuat kosong. Setelah selesai, buka File Manager lalu upload kode Anda sendiri seperti <b>index.html</b>, CSS, JavaScript, gambar, atau file lainnya. GitHub Pages dapat diaktifkan setelah file pertama tersedia.
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn" type="button" data-close-modal="createModal">Batal</button>
+          <button class="btn btn-primary" type="submit">Buat Website</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="repoModal">
+    <div class="modal modal-wide">
+      <div class="modal-head">
+        <div>
+          <span class="modal-badge">REPOSITORY</span>
+          <h2 id="repoModalTitle">Repository</h2>
+        </div>
+        <button class="modal-close" data-close-modal="repoModal">×</button>
+      </div>
+
+      <div id="repoModalBody">
+        <div class="center">Memuat...</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="editorModal">
+    <div class="modal modal-editor">
+      <div class="modal-head">
+        <div>
+          <span class="modal-badge" id="editorBadge">EDITOR</span>
+          <h2 id="editorTitle">File</h2>
+        </div>
+        <button class="modal-close" data-close-modal="editorModal">×</button>
+      </div>
+
+      <input id="editorPath" class="editor-path" placeholder="folder/file.html">
+      <textarea id="editorContent" spellcheck="false"></textarea>
+
+      <div class="modal-actions">
+        <button class="btn btn-danger" id="deleteFileBtn">Hapus</button>
+        <span class="grow"></span>
+        <button class="btn" data-close-modal="editorModal">Batal</button>
+        <button class="btn btn-primary" id="saveFileBtn">Simpan & Commit</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastStack" class="toast-stack"></div>
+
+  <div id="loadingOverlay" class="overlay">
+    <div class="spinner"></div>
+    <strong id="loadingText">Memproses...</strong>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "Minimal",
+  "files": [
+    {
+      "path": "index.html",
+      "content": "<!doctype html><html lang=\"id\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>{{TITLE}}</title><link rel=\"stylesheet\" href=\"style.css\"></head><body><main><h1>{{TITLE}}</h1><p>Website berhasil dibuat dengan GitPage Manager.</p></main></body></html>"
+    },
+    {
+      "path": "style.css",
+      "content": "body{font-family:system-ui,sans-serif;background:#f6f8fb;color:#172033;margin:0}main{max-width:850px;margin:80px auto;background:#fff;border:1px solid #e5e9f0;border-radius:18px;padding:30px}"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Dashboard",
+  "files": [
+    {
+      "path": "index.html",
+      "content": "<!doctype html><html lang=\"id\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>{{TITLE}}</title><link rel=\"stylesheet\" href=\"style.css\"></head><body><aside><h2>{{TITLE}}</h2><a class=\"active\">Dashboard</a><a>Data</a><a>Laporan</a></aside><main><header><h1>Dashboard</h1><span>● Online</span></header><section><article><small>Total Data</small><b>1.248</b></article><article><small>Aktif</small><b>986</b></article><article><small>Hari Ini</small><b>42</b></article></section><div class=\"panel\"><h2>Selamat datang</h2><p>Dashboard berhasil dipublikasikan di GitHub Pages.</p></div></main></body></html>"
+    },
+    {
+      "path": "style.css",
+      "content": "*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;background:#f6f8fc;color:#172033}aside{position:fixed;inset:0 auto 0 0;width:230px;background:#111827;color:#fff;padding:25px}aside a{display:block;color:#aeb7c7;padding:11px;border-radius:9px;margin:5px 0}.active{background:#202b3d;color:#fff}main{margin-left:230px;padding:32px}header{display:flex;justify-content:space-between;align-items:center}header span{background:#eaf8ef;color:#168043;padding:8px 11px;border-radius:99px}section{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}article,.panel{background:#fff;border:1px solid #e5e9f0;border-radius:17px;padding:22px}article small,article b{display:block}article b{font-size:32px;margin-top:9px}.panel{margin-top:15px}@media(max-width:700px){aside{position:static;width:auto}main{margin:0;padding:18px}section{grid-template-columns:1fr}}"
+    }
+  ]
+}
